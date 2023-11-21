@@ -111,24 +111,7 @@
  * If disabled, this behaviour will only apply to tasks of the
  * RT class.
  */
-<<<<<<< HEAD
 #define SCHED_FEAT_SCHEDTUNE_BOOST_HOLD_ALL 0
 
 #define SCHED_FEAT_ALT_PERIOD 1
 #define SCHED_FEAT_BASE_SLICE 1
-=======
-<<<<<<< HEAD
-SCHED_FEAT(SCHEDTUNE_BOOST_HOLD_ALL, false)
->>>>>>> 550352cc91e4 (sched/fair: Commit to EEVDF)
-
-#define SCHED_FEAT_EEVDF 1
-=======
-#define SCHED_FEAT_SCHEDTUNE_BOOST_HOLD_ALL 0
-
-/*
- * Inflate the effective utilization of SchedTune-boosted tasks, which
- * generally leads to usage of higher frequencies.
- * If disabled, boosts will only bias tasks to higher-capacity CPUs.
- */
-#define SCHED_FEAT_SCHEDTUNE_BOOST_UTIL 0
->>>>>>> cb28dd8b7662 (sched/fair: Commit to EEVDF)
