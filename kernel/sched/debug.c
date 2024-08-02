@@ -352,7 +352,6 @@ print_task(struct seq_file *m, struct rq *rq, struct task_struct *p)
 	SEQ_printf(m, "%15s %5d %9Ld.%06ld %c %9Ld.%06ld %9Ld.%06ld %9Ld.%06ld %9Ld %5d ",
 		p->comm, task_pid_nr(p),
 		SPLIT_NS(p->se.vruntime),
-		entity_eligible(cfs_rq_of(&p->se), &p->se) ? 'E' : 'N',
 		SPLIT_NS(p->se.deadline),
 		SPLIT_NS(p->se.slice),
 		SPLIT_NS(p->se.sum_exec_runtime),
@@ -400,7 +399,7 @@ void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
 	s64 MIN_vruntime = -1, min_vruntime, max_vruntime = -1, left_deadline = -1,
 		spread, rq0_min_vruntime, spread0, *root;
 	struct rq *rq = cpu_rq(cpu);
-	struct sched_entity *last;
+	struct sched_entity *last, *first;
 	unsigned long flags;
 
 #ifdef CONFIG_FAIR_GROUP_SCHED
@@ -416,7 +415,7 @@ void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
 	raw_spin_lock_irqsave(&rq->lock, flags);
 	if (rb_first_cached(&cfs_rq->tasks_timeline))
 		MIN_vruntime = (__pick_first_entity(cfs_rq))->vruntime;
-	irst = __pick_first_entity(cfs_rq);
+	first = __pick_first_entity(cfs_rq);
 	if (first)
 		left_deadline = first->deadline;
 	last = __pick_last_entity(cfs_rq);
